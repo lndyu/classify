@@ -14,24 +14,24 @@
 # ==============================================================================
 relu:
     # Prologue
-    bge a1 x0 error
-    lw a2 0(a0)
+    bge x0 a1 error
     j loop_start
 
 error:
+	addi a1 x0 57
     call exit2
 
 loop_start:
-    bge a1 zero loop_end
-	bge a2, 1, loop_continue
-	sub a2, x0, a2
+    bge x0 a1 loop_end
+    lw t0 0(a0)
+	bge t0 x0 loop_continue
+    sw x0 0(a0)
     j loop_continue
 
 
 
 loop_continue:
     addi a1 a1 -1
-    sw a2 0(a0)
     addi a0 a0 4
     j loop_start
 

@@ -63,40 +63,40 @@ error:
     call exit2
 
 outer_loop_start:
-	bge s7 s1 outer_loop_end 
-    jal inner_loop_start
-    addi s7 s7 1
-    slli t0 s2 2
-    add s0 s0 t0
+	bge s7 s1 outer_loop_end #when we look at all the rows, break
+    jal inner_loop_start #call inner loop
+    addi s7 s7 1 #increment the index for the current row
+    slli t0 s2 2 #get to the index of the first element in the next row of m0
+    add s0 s0 t0 #first element of next row of m0
     j outer_loop_start
 
 
 
 inner_loop_start:
-	bge s8 s4 inner_loop_end #break if all values have been looked at
-    slli t0 s8 2 #incrememnt value is index * 4
-    add a0 s0 x0
-    add a1 s3 t0 #add incrememnt to pointer to m1
-    add a2 s2 x0 #load stride
-    addi a3 x0 1
-    add a4 s5 x0
+	bge s8 s5 inner_loop_end #break if all values have been looked at
+    add a0 s0 x0 #first element of the current row
+    add a1 s3 x0 #current element in second matrix
+    add a2 s2 x0 #load number of elements
+    addi a3 x0 1 #stride of first matrix is 1
+    add a4 s5 x0 #stride of second matrix is the number of columns
     
-    addi sp sp -4 #save ra
+    addi sp sp -4
     sw ra 0(sp)
-    
-    jal dot
-    
+    jal ra dot
     lw ra 0(sp)
-    addi sp sp 4 #load ra
+    addi sp sp 4
     
     sw a0 0(s6) #put result into array
     addi s6 s6 4 #increment array index
+    addi s3 s3 4 #increment array pointer
     addi s8 s8 1 #increment counter
     j inner_loop_start
     
     
 inner_loop_end:
-	add s8 x0 x0
+	slli t0 s5 2
+    sub s3 s3 t0
+	add s8 x0 x0 #turn the current column back to 0
 	jr ra
 
 
