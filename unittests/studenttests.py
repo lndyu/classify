@@ -243,7 +243,7 @@ class TestZeroOneLoss(TestCase):
 		# call the `zero_one_loss` function
 		t.call("zero_one_loss")
 		# check that the result array contains the correct output
-		t.check_array(result,[0,1,1,1,1,1,1,0,1])
+		t.check_array(result,[1,0,0,0,0,0,0,1,0])
 		# generate the `assembly/TestZeroOneLoss_test_simple.s` file and run it through venus
 		t.execute()
 	def test_zero(self):
@@ -331,8 +331,7 @@ class TestInitializeZero(TestCase):
 		# call the `initialize_zero` function
 		t.call("initialize_zero")
 		# check that the register a0 contains the correct array (hint: look at the check_array_pointer function in framework.py)
-		t.check_scalar("a0",123)
-		t.execute()
+		t.execute(code=123)
 	def test_zero(self):
 		t = AssemblyTest(self, "initialize_zero.s")
 
@@ -341,18 +340,16 @@ class TestInitializeZero(TestCase):
 		# call the `initialize_zero` function
 		t.call("initialize_zero")
 		# check that the register a0 contains the correct array (hint: look at the check_array_pointer function in framework.py)
-		t.check_scalar("a0",123)
-		t.execute()
+		t.execute(code=123)
 	def test_malloc(self):
 		t = AssemblyTest(self, "initialize_zero.s")
 
 		# input the length of the desired array
-		t.input_scalar("a0",10**50)
+		t.input_scalar("a0",10**10)
 		# call the `initialize_zero` function
 		t.call("initialize_zero")
 		# check that the register a0 contains the correct array (hint: look at the check_array_pointer function in framework.py)
-		t.check_scalar("a0",123)
-		t.execute()
+		t.execute(code=122)
 
 	@classmethod
 	def tearDownClass(cls):
