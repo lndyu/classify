@@ -225,7 +225,7 @@ zero_one_loss
 class TestZeroOneLoss(TestCase):
 	def test_simple(self):
 		# load the test for zero_one_loss.s
-		t = AssemblyTest(self, "squared_loss.s")
+		t = AssemblyTest(self, "zero_one_loss.s")
 		# create array0 in the data section
 		array0 = t.array([1,2,3,4,5,6,7,9,9])
 		# load address of `array0` into register a0
