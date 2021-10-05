@@ -251,7 +251,7 @@ class TestZeroOneLoss(TestCase):
         # generate the `assembly/TestZeroOneLoss_test_simple.s` file and run it through venus
         t.execute()
        
-   def test_zero():
+   def test_zero(self):
     	# load the test for zero_one_loss.s
         t = AssemblyTest(self, "zero_one_loss.s")
         # create array0 in the data section
@@ -275,7 +275,7 @@ class TestZeroOneLoss(TestCase):
         # generate the `assembly/TestSquaredLoss_test_simple.s` file and run it through venus
         t.execute()
     
-   def test_negative():
+   def test_negative(self):
     	# load the test for squared_loss.s
         t = AssemblyTest(self, "squared_loss.s")
         # create array0 in the data section
