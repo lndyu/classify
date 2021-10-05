@@ -341,15 +341,16 @@ class TestInitializeZero(TestCase):
 		t.call("initialize_zero")
 		# check that the register a0 contains the correct array (hint: look at the check_array_pointer function in framework.py)
 		t.execute(code=123)
-	def test_malloc(self):
+	def test_one(self):
 		t = AssemblyTest(self, "initialize_zero.s")
 
 		# input the length of the desired array
-		t.input_scalar("a0",250000)
+		t.input_scalar("a0",1)
 		# call the `initialize_zero` function
 		t.call("initialize_zero")
 		# check that the register a0 contains the correct array (hint: look at the check_array_pointer function in framework.py)
-		t.execute(code=122)
+		t.check_array_pointer("a0",[0])
+		t.execute()
 
 	@classmethod
 	def tearDownClass(cls):
