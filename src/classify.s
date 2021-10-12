@@ -268,6 +268,15 @@ continue:
     add a0 x0 s5
     jal ra free
     
+    add a0 x0 s8
+    jal ra free
+    
+    add a0 x0 s9
+    jal ra free
+    
+    add a0 x0 s10
+    jal ra free
+    
     #return a0 as s11
     add a0 x0 s11
 
