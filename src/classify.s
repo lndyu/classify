@@ -180,8 +180,8 @@ classify:
 	add a0 x0 s1
     jal ra free
     
-    #malloc 1 more space for the product and store in s11
-    lw t0 0(s0)
+    #malloc 1 more space for the product and store in s1
+    lw t0 0(s2)
     lw t1 0(s5)
     mul t0 t0 t1
     
@@ -230,7 +230,6 @@ classify:
     
     #free s11 (we don't need it anymore)
     add a0 x0 s11
-    
     jal ra free
 	
     #load the number of elements
