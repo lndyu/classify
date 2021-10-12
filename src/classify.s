@@ -176,15 +176,21 @@ classify:
     
     # the ReLU(m0 * input) is now stored in s11
     
-
-    # =====================================
-    # WRITE OUTPUT
-    # =====================================
-    # Write output matrix
-	
-    # fetch the output pointer
+    #free s1 real quick
+	add a0 x0 s1
+    jal ra free
     
-    # Calculate m1 * ReLU(m0 * input) and store it in the malloc data in output
+    #malloc 1 more space for the product and store in s11
+    lw t0 0(s0)
+    lw t1 0(s5)
+    mul t0 t0 t1
+    
+	slli a0 t0 2
+    jal ra malloc
+    beq a0 x0 error88
+    add s1 x0 a0
+    
+    # Calculate m1 * ReLU(m0 * input) and store it in the malloc data in s1
     
     #store the numbers into registers first
     lw t2 0(s2)
@@ -198,9 +204,23 @@ classify:
     add a3 x0 s11
     add a4 x0 t0
     add a5 x0 t5
-    lw a6 16(s0)
+    add a6 x0 s1
     
     jal ra matmul
+    
+
+    # =====================================
+    # WRITE OUTPUT
+    # =====================================
+    # Write output matrix
+	
+    # fetch the output pointer
+    lw a0 16(s6)
+    add a1 x0 s1
+    lw a2 0(s2)
+    lw a3 0(s3)
+    
+    jal ra write_matrix
 
 
     # =====================================
@@ -217,7 +237,7 @@ classify:
     lw t0 0(s2)
     lw t1 0(s5)
     
-    lw a0 16(s0)
+    add a0 x0 s1
     mul a1 t0 t1
     
     jal ra argmax
