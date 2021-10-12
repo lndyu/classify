@@ -154,11 +154,11 @@ classify:
     lw t5 0(s5)
     
 	add a0 x0 s8
-    add a1 x0 s0
-    add a2 x0 s1
+    add a1 x0 t0
+    add a2 x0 t1
     add a3 x0 s10
-    add a4 x0 s4
-    add a5 x0 s5
+    add a4 x0 t4
+    add a5 x0 t5
     add a6 x0 s11
     
     jal ra matmul
@@ -218,7 +218,7 @@ classify:
     lw a0 16(s6)
     add a1 x0 s1
     lw a2 0(s2)
-    lw a3 0(s3)
+    lw a3 0(s5)
     
     jal ra write_matrix
 
@@ -245,9 +245,11 @@ classify:
     add s11 x0 a0 # store this in s11 for now
 
     # Print classification
-    add a1 x0 s11
-	beq s7 x0 print_value
     
+	beq s7 x0 print_value
+    j continue
+    
+continue:
     # free remaining mallocs
     add a0 x0 s0
     jal ra free
@@ -290,10 +292,11 @@ classify:
     
     
 print_value:
-	jal ra print_int
+	add a1 s11 x0
+	jal print_int
     addi a1 x0 10
-    jal ra print_char
-    ret
+    jal print_char
+    j continue
     
 error88:
 	addi a1 x0 88
